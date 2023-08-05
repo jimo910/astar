@@ -3,7 +3,8 @@
 #include <vector>
 using namespace std;
 
-class node{
+// it is class of an object that has attribute(x-coord, y-coordinate , nodestatus)
+class node{ 
 		public:
 		node(int xt, int yt, char p){
 			next= 0;
@@ -13,23 +14,27 @@ class node{
 			this->y = yt;
 			this->x = xt;
 			count =0;
-		}
-		node* next;
-		 node* parent;
-		 float globalValue;
-		 float localValue;
+		} 
+		node* next; //it points to the node next to it in a container
+		 node* parent; // it points to the previous node on the path to the targeted node.
+		 float globalValue; // globalValue is  the distance between the starting-node and the targeted node.
+		 float localValue; // local value is the distance  between this node and the targeted node.
 		 char nodeStatus; // a passage or a blockage
 		 char checkers; // visited or unvisited.
-		 int x;
-		 int y;
-		 int indexs;
+		 int x; // the x-coordinate of the node
+		 int y; // the y-coordinate of the node.
+		 int indexs; // it returns the  number of node object instantiated before this node.
 		 int count;
 
 	};
 	
+
+
+
 	
 template <class T>
-class nodeBox {
+
+class nodeBox {  //  a class to make working with node object easier.
 public:
  nodeBox() {
  	next = 0;
@@ -41,107 +46,40 @@ public:
    nodeBox *next;
 };
 
+
 template <class T>
-class vectorBox{
-public:
-   vectorBox() {
-		 head = tail = 0;
-		 count =0;
+	class vectorBox{ // a class object for storing and indexing Element.		
+		public:
+ 			vectorBox() { // vectorbox constructor.
+			head = tail = 0;
+			count =0;
 		// this->y = x;
    }
 
- int isEmpty() {
- return head == 0;
+ 		int isEmpty() { //  function to check if the vectorBox is empty
+ 				return head == 0;
+ 			}
+ 		void push_back(T); // to insert a new element T at the back of container.
+	    void insert(T); // to insert  a new element T at the front of container
+ 		T index(int); // it returns the element  T at the parameter 
+ 		int size(); // it returms the number of element in the box
+	    int count;	// it use to increment the number of element in the container.
+		vectorBox<T> &operator+=( vectorBox<T>);
+  		int x;
+ 		int y;
+	 vectorBox< T > addvectorBox( vectorBox<T> x, vectorBox<T> y);
+ 	//	void changedx(int x);
+		 nodeBox<T> * returnHead(){  // it return the  first element.
+ 			return head;
+ 		}
+		nodeBox<T> * returntail(){ // it returns the last element.
+ 				return tail;
  }
- void push_back(T);
- void insert(T);
- T index(int);
- int size();
- int count;	
- int x;
- int y;
- void changedx(int x);
- nodeBox<T> * returnHead(){
- 	return head;
- }
-nodeBox<T> * returntail(){
- 	return tail;
- }
- private:
- 	nodeBox<T>* head;  nodeBox<T> *tail;
+ 	private:
+ 				nodeBox<T>* head=0;  nodeBox<T> *tail=0; // th
 };
 
-template <class T>
-void vectorBox<T>::insert(T el) {
- head = new nodeBox<T>(el,head);
- if (tail == 0){
- 	tail = head;
-}
-count = count+1;
-}
 
-template <class T> 
-void vectorBox<T>::push_back(T el) {
- 	if (tail != 0) { 
- 		tail->next = new nodeBox<T>(el);
- 		tail = tail->next;
- }
- else head = tail = new nodeBox<T>(el);
- 	count = count+1;
-}
 
-template <class T>
-int vectorBox<T>::size(){
-	return count;
-}
-template <class T>
- T vectorBox<T>::index(int j){
- 	size_t i;
- 	nodeBox<T>* start;
-	T returnw;
-	start = head;
- 	for(i=0; i<this->size(); i++){
- 		if(j==i){
- 			returnw= start->info;
- 			
-		 }
-		 start= start->next;
-	 }
-	 return returnw;
- }
 
-template <class T> 
- void vectorBox<T>::changedx(int x){
- 	size_t i;
- 	for(i=0; i<this->size(); i++){
- 		T hello = index(i);
- 		hello->x = i;
-	}
- }
- 
- template<class T>
-vectorBox< T > addvectorBox( vectorBox<T> x, vectorBox<T> y){
-	vectorBox<T> path;
-	vector<node *> vectorPath;
-	size_t j;
-	
-	for(j=0; j<x.size(); j++){
-			node* hello = x.index(j);
-			vectorPath.push_back(hello);
-					
-	}
-	for(j=0; j<x.size(); j++){
-		node* hello = y.index(j);
-		vectorPath.push_back(hello);
-					
-		}
-	for(j=0; j<vectorPath.size(); j++){
-		node* hello = vectorPath[j];
-		path.push_back(hello);
-				
-		}
-	return path;
-	
-}
- 
- 
+
